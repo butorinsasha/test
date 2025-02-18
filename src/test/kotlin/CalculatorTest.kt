@@ -4,17 +4,68 @@ import org.junit.Assert.*
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.BeforeClass
-import org.junit.FixMethodOrder
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.junit.runners.MethodSorters
+import rules.MyTestRule
 
 @RunWith(JUnit4::class)
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 //@FixMethodOrder(MethodSorters.JVM)
 //@FixMethodOrder(MethodSorters.DEFAULT)
 class CalculatorTest{
+//OUTPUT:
+
+//    In @BeforeClass beforeClassMethod()
+
+//    In @TestRule First before Test
+//    In @TestRule Second before Test
+//    In @TestRule Third before Test
+//    In @Before setUp()
+//    In @Test calculatorTest1()
+//    In @After tearDown()
+//    In @TestRule Third after Test
+//    In @TestRule Second after Test
+//    In @TestRule First after Test
+
+//    In @TestRule First before Test
+//    In @TestRule Second before Test
+//    In @TestRule Third before Test
+//    In @Before setUp()
+//    In @Test calculatorTest2()
+//    In @After tearDown()
+//    In @TestRule Third after Test
+//    In @TestRule Second after Test
+//    In @TestRule First after Test
+
+//    In @TestRule First before Test
+//    In @TestRule Second before Test
+//    In @TestRule Third before Test
+//    In @Before setUp()
+//    In @Test calculatorTest3()
+//    In @After tearDown()
+//    In @TestRule Third after Test
+//    In @TestRule Second after Test
+//    In @TestRule First after Test
+
+//    In @AfterClass afterClassMethod()
+
+
+
+
+//    @Rule val rule // WRONG
+//    @get:Rule val rule = MyTestRule("First")
+//    @Rule lateinit var rule = MyTestRule("First")
+//    @Rule @JvmField var rule = MyTestRule("First")
+
+    @JvmField
+    @Rule
+    val ruleChain : RuleChain = RuleChain
+        .outerRule(MyTestRule("First"))
+        .around(MyTestRule("Second"))
+        .around(MyTestRule("Third"))
 
     lateinit var calculator : Calculator
 
